@@ -1,0 +1,24 @@
+/* src/components/DeliveryTracking.css */
+.delivery-tracking {
+    position: relative;
+  }
+  
+  .delivery-details {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background: rgba(255, 255, 255, 0.9);
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    width: 200px;
+  }
+  
+  .delivery-details h2 {
+    margin: 0 0 10px 0;
+  }
+  
+  .delivery-details p {
+    margin: 5px 0;
+  }
+  

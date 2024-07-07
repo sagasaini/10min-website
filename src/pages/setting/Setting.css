@@ -1,0 +1,206 @@
+.custom-page-content {
+    padding-top: 150px;
+    padding-bottom: 150px;
+  }
+  
+  .custom-container {
+    display: flex;
+    justify-content: center;
+    width: 80%;
+    margin: auto;
+  }
+  .custom-link{
+    cursor: pointer;
+  }
+  
+  .custom-dashboard {
+    display: flex;
+    width: 100%;
+  }
+  
+  .custom-dashboard-menu {
+    width: 25%;
+    padding-right: 20px;
+  }
+  
+  .custom-nav {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .custom-nav-item {
+    margin-bottom: 10px;
+  }
+  
+  .custom-nav-link {
+    display: flex;
+    align-items: center;
+    padding: 15px 30px;
+    /* background: #f9f9f9; */
+    border-radius: 4px;
+    color: #333;
+    text-decoration: none;
+    cursor: pointer;
+    border: 1px solid #ececec;
+  }
+  
+  .custom-nav-link.active {
+    color: #fff;
+    background: #3BB77E;
+    border-radius: 10px;
+
+  }
+  
+  .custom-nav-link i {
+    margin-right: 10px;
+  }
+  
+  .custom-dashboard-content {
+    width: 75%;
+  }
+  
+  .custom-card {
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin-bottom: 20px;
+  }
+  
+  .custom-card-header {
+    background: #f9f9f9;
+    padding: 15px;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .custom-card-body {
+    padding: 15px;
+  }
+  
+  .custom-table-responsive {
+    margin-top: 20px;
+  }
+  
+  .custom-table th,
+  .custom-table td {
+    padding: 10px;
+    border: 1px solid #ddd;
+  }
+  
+  .custom-table th {
+    background: #f9f9f9;
+  }
+  
+  .custom-btn-small {
+    padding: 5px 10px;
+    background: #333;
+    color: #fff;
+    border-radius: 4px;
+    text-decoration: none;
+  }
+  
+  .custom-btn-small:hover {
+    background: #555;
+  }
+  
+  .custom-contact-form-style {
+    margin-top: 30px;
+    margin-bottom: 50px;
+  }
+  
+  .custom-input-style {
+    margin-bottom: 20px;
+  }
+  
+  .custom-input-style input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+  }
+  
+  .custom-submit {
+    padding: 10px 20px;
+    background: #333;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+  }
+  
+  .custom-submit:hover {
+    background: #555;
+  }
+  
+  /* Media Queries */
+  @media (max-width: 768px) {
+    .custom-dashboard-menu {
+      width: 100%;
+      padding-right: 0;
+      margin-bottom: 20px;
+    }
+  
+    .custom-dashboard-content {
+      width: 100%;
+    }
+  
+    .custom-nav-link {
+      font-size: 14px;
+      padding: 8px;
+    }
+  
+    .custom-card-header {
+      padding: 10px;
+    }
+  
+    .custom-card-body {
+      padding: 10px;
+    }
+  
+    .custom-table th,
+    .custom-table td {
+      padding: 8px;
+    }
+  
+    .custom-btn-small {
+      padding: 4px 8px;
+    }
+  
+    .custom-input-style input {
+      padding: 8px;
+    }
+  
+    .custom-submit {
+      padding: 8px 16px;
+    }
+  }
+  
+  @media (max-width: 576px) {
+    .custom-nav-link {
+      font-size: 12px;
+      padding: 6px;
+    }
+  
+    .custom-card-header {
+      padding: 8px;
+    }
+  
+    .custom-card-body {
+      padding: 8px;
+    }
+  
+    .custom-table th,
+    .custom-table td {
+      padding: 6px;
+    }
+  
+    .custom-btn-small {
+      padding: 2px 6px;
+    }
+  
+    .custom-input-style input {
+      padding: 6px;
+    }
+  
+    .custom-submit {
+      padding: 6px 12px;
+    }
+  }
+  

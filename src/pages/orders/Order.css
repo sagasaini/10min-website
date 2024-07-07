@@ -1,0 +1,55 @@
+.order-page {
+  padding: 20px;
+}
+
+.order-list {
+  margin-bottom: 20px;
+}
+
+.order-card {
+  display: flex;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+
+.order-image {
+  /* width: 100px; */
+  height: 100px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-right: 20px;
+}
+
+.order-details {
+  flex-grow: 1;
+}
+
+.order-details h3 {
+  margin: 0;
+  font-size: 1.2em;
+}
+
+.order-details p {
+  margin: 5px 0;
+}
+
+.order-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.get-help-btn {
+  background-color: #ff7300;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.total-paid {
+  font-weight: bold;
+}

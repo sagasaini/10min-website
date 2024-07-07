@@ -1,0 +1,276 @@
+.cart-modal-rn {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    /* position: fixed; */
+    position: absolute;
+    /* background: white; */
+    top: 0;
+    right: 0;
+    width: 50%; /* Set to half the screen width */
+    height: 100%;
+    max-width: 414px;
+    z-index: 220;
+    transition: transform 0.2s cubic-bezier(0.42, 0, 0.58, 1);
+    background-color: #f7f7f7;
+    box-shadow: -20px 0 20px rgb(0 0 0 / 8%);
+    transform: translateX(100%);
+}
+
+.cart-modal--with-searchbar {
+    margin-top: 82px;
+}
+
+.CartWrapper__CartContainer {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    position: relative;
+}
+
+.CartWrapper__CartPage {
+    flex: 1;
+    overflow-y: auto;
+    position: relative;
+}
+
+.CartWrapper__TitleContainer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 16px;
+    height: 50px;
+    background: #fff;
+    box-shadow: 0 2px 4px rgb(0 0 0 / 8%);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.CartWrapper__Title {
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.CartWrapper__Icon {
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.Cart__StyledDiv {
+    flex: 1;
+    overflow-y: auto;
+    padding: 0 16px;
+}
+
+.widgets__Container {
+    display: flex;
+    flex-direction: column;
+    padding: 16px 0;
+}
+
+.widgets__WidgetContainer {
+    margin-bottom: 16px;
+}
+
+.ShipmentSlot__Container, .CartProduct__Container, .BillCard__BillCardWrapper, .FeedingIndia__FeedingIndiaWrapper {
+    background: #fff;
+    border-radius: 8px;
+    padding: 16px;
+    box-shadow: 0 2px 4px rgb(0 0 0 / 8%);
+}
+
+.ShipmentSlot__HeaderStripContainer, .BillCard__BillItemWrap {
+    margin-bottom: 16px;
+}
+
+.HeaderStrip__Container, .DefaultProductCard__Container, .BillCard__BillItemContainer, .FeedingIndiaComponent__Container {
+    display: flex;
+    align-items: center;
+}
+
+.HeaderStrip__ImageContainer, .DefaultProductCard__LeftContainer, .BillCard__BillItemLeftHeaderIcon, .FeedingIndiaComponent__IconContainer {
+    margin-right: 16px;
+}
+
+.DefaultProductCard__CustomImage, .sc-gsnTZi {
+    position: relative;
+}
+
+.sc-hKMtZM::before {
+    content: "";
+    display: block;
+    padding-top: 100%;
+}
+
+.sc-jSMfEi {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.DefaultProductCard__RightContainer {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.DefaultProductCard__ProductTitle {
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.DefaultProductCard__ProductVariantContainer, .BillCard__BillItemLeftHeaderTextContent, .FeedingIndiaComponent__Title {
+    font-size: 14px;
+    color: #757575;
+}
+
+.DefaultProductCard__PriceSpeakerContainer, .BillCard__BillItemRightHeader {
+    display: flex;
+    align-items: center;
+}
+
+.DefaultProductCard__PriceContainer, .AddToCart__UpdatedButtonContainer {
+    margin-right: 16px;
+}
+
+.DefaultProductCard__Price, .BillCard__BillItemRightHeader, .tw-text-300 {
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.AddToCart__StyledDiv, .AddToCart__StyledDiv2 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: #007bff;
+    color: #fff;
+    cursor: pointer;
+}
+
+.tw-inline-flex, .icon-info-line {
+    margin-left: 8px;
+    font-size: 16px;
+    color: #757575;
+}
+
+.tw-line-through {
+    text-decoration: line-through;
+}
+
+.tw-text-blue-500 {
+    color: #007bff;
+}
+
+.tw-text-grey-700 {
+    color: #757575;
+}
+
+.tw-font-medium {
+    font-weight: 500;
+}
+
+.tw-text-400 {
+    font-weight: 600;
+}
+
+.tw-font-semibold {
+    font-weight: 700;
+}
+
+.FeedingIndiaComponent__ContentContainer {
+    flex: 1;
+}
+
+.FeedingIndiaComponent__Description {
+    font-size: 12px;
+    color: #757575;
+}
+
+.BillCard__BillItemWrap, .BillCard__BillItemContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.BillCard__BillItemLeftHeader {
+    display: flex;
+    align-items: center;
+}
+
+.BillCard__BillItemLeftHeaderTextContent {
+    font-size: 14px;
+    color: #757575;
+}
+
+.BillCard__BillItemRightHeader {
+    font-size: 16px;
+    font-weight: 600;
+    color: #333;
+}
+
+.BillCard__BillItemLeft {
+    display: flex;
+    align-items: center;
+}
+
+.tw-text-300, .tw-text-400, .tw-font-medium, .tw-font-semibold {
+    font-weight: 600;
+}
+
+.tw-inline-block {
+    display: inline-block;
+}
+
+.icon-food-menu-fill, .icon-delivery, .icon-order-bag-fill {
+    font-size: 16px;
+    color: #757575;
+}
+
+.CartCTA__Container, .FeedingIndiaComponent__Wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #fff;
+    border-radius: 8px;
+    padding: 16px;
+    box-shadow: 0 2px 4px rgb(0 0 0 / 8%);
+}
+
+.CartCTA__ButtonContainer, .FeedingIndiaComponent__Wrapper {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.BaseButton__Container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+.CartCTA__Button {
+    width: 100%;
+    padding: 16px;
+    background: #007bff;
+    color: white;
+    font-size: 18px;
+    border: none;
+    cursor: pointer;
+    text-align: center;
+    border-radius: 8px;
+    transition: background-color 0.2s ease;
+}
+
+.CartCTA__Button:hover {
+    background-color: #0056b3;
+}

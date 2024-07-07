@@ -1,0 +1,276 @@
+.page-content {
+    padding-top: 50px;
+}
+
+.mb-30, .mb-40, .mb-50, .mb-25, .mb-md-3, .mb-lg-0, .mb-sm-4, .mb-md-5, .mb-lg-5, .mb-sm-5 {
+    margin-bottom: 30px;
+    margin-bottom: 40px;
+    margin-bottom: 50px;
+    margin-bottom: 25px;
+    margin-bottom: 30px;
+    margin-bottom: 40px;
+    margin-bottom: 50px;
+    margin-bottom: 25px;
+    margin-bottom: 30px;
+}
+
+.pt-50 {
+    padding-top: 50px;
+}
+
+.about-us-container {
+    /* max-width: 1200px; */
+    margin: 0 auto;
+    padding: 40px ;
+}
+
+.row {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 -15px;
+}
+
+.col-lg-6, .col-lg-4, .col-md-6, .col-lg-5, .col-lg-7, .col-xl-10, .col-lg-12 {
+    padding: 0 15px;
+    /* flex: 0 0 auto; */
+    /* width: 100%; */
+}
+
+/* @media (min-width: 992px) {
+    .col-lg-6 {
+        width: 50%;
+    }
+
+    .col-lg-4 {
+        width: 33.333333%;
+    }
+
+    .col-lg-5 {
+        width: 41.666667%;
+    }
+
+    .col-lg-7 {
+        width: 58.333333%;
+    }
+
+    .col-lg-12 {
+        width: 100%;
+    }
+
+    .col-xl-10 {
+        width: 83.333333%;
+    }
+}
+
+@media (min-width: 768px) {
+    .col-md-6 {
+        width: 50%;
+    }
+} */
+
+.m-auto {
+    margin: auto;
+}
+
+.border-radius-15 {
+    border-radius: 15px;
+}
+
+.pl-25 {
+    padding-left: 25px;
+}
+
+.position-relative {
+    position: relative;
+}
+
+.carousel-3-columns-cover {
+    position: relative;
+    overflow: hidden;
+}
+
+.carousel-3-columns {
+    display: flex;
+    transition: transform 0.5s;
+}
+
+.carousel-track {
+    display: flex;
+}
+
+.carousel-slide {
+    width: 271px;
+    margin-right: 15px;
+}
+
+.slider-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: #fff;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.slider-prev {
+    left: 10px;
+}
+
+.slider-next {
+    right: 10px;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.text-muted {
+    color: #6c757d;
+}
+
+.heading-1 {
+    font-size: 36px;
+    font-weight: 700;
+}
+
+.featured-card {
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    text-align: center;
+    background: #fff;
+    transition: transform 0.3s;
+}
+
+.featured-card:hover {
+    transform: translateY(-10px);
+}
+
+.team-card {
+    margin-bottom: 30px;
+    text-align: center;
+}
+.social-network{
+    display: flex;
+}
+
+.team-card img {
+    width: 40%;
+    border-radius: 10px;
+}
+
+.team-card .content {
+    margin-top: 20px;
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.05);
+    border-radius: 15px;
+    background: #fff;
+    padding: 30px;
+    max-width: 80%;
+    position: relative;
+    z-index: 2;
+    transform: translateY(-90px);
+    margin-left: auto;
+    margin-right: auto;
+    transition: 0.2s;
+}
+
+.social-network a {
+    margin: 0 5px;
+}
+
+.btn {
+    display: inline-block;
+    padding: 10px 20px;
+    background: #007bff;
+    color: #fff;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background 0.3s;
+}
+
+.btn:hover {
+    background: #0056b3;
+}
+
+.about-count {
+    z-index: 100;
+    position: relative;
+    color: #fff;
+    background: url('../../assets//imgs//page/about-9.png') no-repeat center center;
+    border-radius: 15px;
+    padding: 100px 0;
+    overflow: hidden;
+    display: flex;
+    justify-content: space-between;
+}
+.about-count::after{
+    
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 0;
+    background: #4B675A;
+    z-index: 2;
+    opacity: 0.8;
+
+}
+
+.about-count .heading-1 {
+    font-size: 72px;
+    color: #fff;
+}
+.about-count h4 {
+    color: #fff;
+}
+.about-count .text-center{
+    z-index: 3;
+    position: relative;
+
+}
+
+/* .about-count .count {
+    font-size: 48px;
+    color: #007bff;
+} */
+.page-content {
+    padding-top: 50px;
+}
+.border-radius-15 {
+    border-radius: 15px;
+}
+.mb-md-3, .mb-lg-0, .mb-sm-4, .mb-25, .mb-50, .mb-30, .mb-40, .mb-20, .mb-24, .mb-md-5, .mb-lg-0, .mb-sm-5 {
+    margin-bottom: 1rem;
+}
+.pl-25 {
+    padding-left: 25px;
+}
+.carousel-3-columns .slick-slide {
+    margin: 0 10px;
+}
+.carousel-3-columns .slick-list {
+    overflow: hidden;
+}
+.carousel-3-columns .slick-track {
+    display: flex;
+    align-items: center;
+}
+.featured-card img {
+    width: 50px;
+    height: 50px;
+}
+.text-center {
+    text-align: center;
+}
+.text-brand {
+    color: #3498db;
+}
+.social-network a {
+    margin-right: 10px;
+}

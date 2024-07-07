@@ -1,0 +1,122 @@
+/* ContactPage.css */
+
+.contact-container{
+    padding: 20px;
+}
+.contact-page {
+    padding-top: 50px;
+}
+
+.contact-page .text-primary {
+    color: #007bff;
+}
+
+.contact-page .contact-page__map {
+    border-radius: 15px;
+    overflow: hidden;
+}
+
+.contact-page .contact-page__form {
+    padding: 20px;
+}
+
+.contact-page .contact-page__form .input-style {
+    margin-bottom: 20px;
+}
+
+.contact-page .contact-page__form .textarea-style {
+    margin-bottom: 30px;
+}
+
+.contact-page .contact-page__form .submit {
+    width: auto;
+}
+
+.contact-page .contact-page__image {
+    border-radius: 15px;
+    margin-top: 50px;
+}
+
+.contact-page .btn-shadow-primary {
+    box-shadow: 0 4px 6px rgba(0, 123, 255, 0.1);
+}
+
+.contact-page .hover-up:hover {
+    transform: translateY(-5px);
+    transition: 0.3s;
+}
+
+.contact-page h1,
+.contact-page h2,
+.contact-page h4,
+.contact-page h5 {
+    margin-bottom: 30px;
+}
+
+.contact-page address {
+    line-height: 1.8;
+}
+
+.contact-page abbr[title] {
+    text-decoration: none;
+}
+
+/* ContactPageForm.css */
+
+.contact-form {
+    padding: 20px;
+    background: #fff;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.contact-form h5 {
+    color: #007bff;
+    margin-bottom: 10px;
+}
+
+.contact-form h2 {
+    margin-bottom: 10px;
+}
+
+.contact-form p {
+    margin-bottom: 30px;
+    color: #6c757d;
+    font-size: 14px;
+}
+
+.contact-form .input-style {
+    margin-bottom: 20px;
+}
+
+.contact-form .input-style input,
+.contact-form .textarea-style textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.contact-form .textarea-style {
+    margin-bottom: 30px;
+}
+
+.contact-form .textarea-style textarea {
+    min-height: 150px;
+    resize: vertical;
+}
+
+.contact-form .submit {
+    padding: 10px 20px;
+    background: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.contact-form .submit:hover {
+    background: #0056b3;
+}
