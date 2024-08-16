@@ -1,12 +1,12 @@
-import React, { useEffect, useRef, useState,useContext } from 'react';
+import React, { useEffect, useRef, useState, useContext } from 'react';
 import Slider from "react-slick";
 import './style.css';
 import { Link } from 'react-router-dom';
-
+import axios from 'axios';
 import { MyContext } from '../../App';
-const CatSlider = (props) => {
 
-    const [allData, setAllData] = useState(props.data);
+const CatSlider = () => {
+    const [allData, setAllData] = useState([]);
     const [totalLength, setTotalLength] = useState([]);
     const context = useContext(MyContext);
 
@@ -33,7 +33,6 @@ const CatSlider = (props) => {
 
     const slider = useRef();
 
-
     var settings = {
         dots: false,
         infinite: false,
@@ -41,203 +40,53 @@ const CatSlider = (props) => {
         slidesToShow: 10,
         slidesToScroll: 1,
         fade: false,
-        arrows: context.windowWidth>992 ? true : false,
-        autoplay: context.windowWidth>992 ? 2000 : false,
-        centerMode: context.windowWidth>992 ? true : false
+        arrows: context.windowWidth > 992 ? true : false,
+        autoplay: context.windowWidth > 992 ? 2000 : false,
+        centerMode: context.windowWidth > 992 ? true : false
     };
 
-
-    var catLength = 0;
-    var lengthArr = [];
     useEffect(() => {
-        allData.length !== 0 &&
-            allData.map((item, index) => {
-                item.items.length !== 0 &&
-                    item.items.map((item_) => {
-                        catLength += item_.products.length
-                    })
-                lengthArr.push(catLength)
-                catLength = 0;
-            })
+        const fetchCategories = async () => {
+            try {
+                const response = await axios.get('https://10min.in/api/api/category');
+                // Log the response to see the structure of the data
+                console.log('Fetched categories:', response.data.categoryList);
+                // Ensure response.data is an array
+                setAllData(response.data.categoryList);
+            } catch (error) {
+                console.error('Error fetching categories:', error);
+            }
+        };
 
-        const list = lengthArr.filter((item, index) => lengthArr.indexOf(item) === index);
-        setTotalLength(list)
-
-
+        fetchCategories();
     }, []);
-
 
     return (
         <>
             <div className='catSliderSection'>
                 <div className='container-fluid' ref={slider}>
                     <h2 className='hd'>Featured Categories</h2>
-                    <Slider {...settings} className='cat_slider_Main' id="cat_slider_Main" >
-
-
-                        {
-                            allData.length !== 0 &&
-                            allData.map((item, index) => {
-                                return (
-                                    <div className='item' key={index} >
-                                        <Link to={`/cat/${item.cat_name.toLowerCase()}`}>
-                                            <div className='info' style={{ background: itemBg[index] }}>
-                                                <img src={item.image} width="80" />
-                                                <h5 className='text-capitalize mt-3'>{item.cat_name}</h5>
-                                                <p>View All</p>
-                                            </div>
-                                        </Link>
-
-                                    </div>
-                                )
-                            })
-                        }
-
-
-
-
-
-
-
-                        {
-                            //    itemBg.length!==0 && itemBg.map((item,index)=>{
-                            //     return(
-                            //         <div className='item'>
-                            //         <div className='info'  style={{background:item}}>
-                            //             <img src='https://wp.alithemes.com/html/nest/demo/assets/imgs/shop/cat-13.png'/>
-                            //             <h5>Cake & Milk</h5>
-                            //             <p>26 items</p>
-                            //         </div>
-                            //     </div>
-                            //     )
-                            //    }) 
-                        }
-
-
-                        {/* <div className='item'>
-                            <div className='info'>
-                                <img src='https://wp.alithemes.com/html/nest/demo/assets/imgs/shop/cat-12.png'/>
-                                <h5>Cake & Milk</h5>
-                                <p>26 items</p>
-                            </div>
-                        </div>
-
-                        <div className='item'>
-                            <div className='info'>
-                                <img src='https://wp.alithemes.com/html/nest/demo/assets/imgs/shop/cat-11.png'/>
-                                <h5>Cake & Milk</h5>
-                                <p>26 items</p>
-                            </div>
-                        </div>
-
-
-                        <div className='item'>
-                            <div className='info'>
-                                <img src='https://wp.alithemes.com/html/nest/demo/assets/imgs/shop/cat-9.png'/>
-                                <h5>Cake & Milk</h5>
-                                <p>26 items</p>
-                            </div>
-                        </div>
-
-
-                        <div className='item'>
-                            <div className='info'>
-                                <img src='https://wp.alithemes.com/html/nest/demo/assets/imgs/shop/cat-3.png'/>
-                                <h5>Cake & Milk</h5>
-                                <p>26 items</p>
-                            </div>
-                        </div>
-
-
-                        <div className='item'>
-                            <div className='info'>
-                                <img src='https://wp.alithemes.com/html/nest/demo/assets/imgs/shop/cat-1.png'/>
-                                <h5>Cake & Milk</h5>
-                                <p>26 items</p>
-                            </div>
-                        </div>
-
-
-                        <div className='item'>
-                            <div className='info'>
-                                <img src='https://wp.alithemes.com/html/nest/demo/assets/imgs/shop/cat-2.png'/>
-                                <h5>Cake & Milk</h5>
-                                <p>26 items</p>
-                            </div>
-                        </div>
-
-
-                        <div className='item'>
-                            <div className='info'>
-                                <img src='https://wp.alithemes.com/html/nest/demo/assets/imgs/shop/cat-4.png'/>
-                                <h5>Cake & Milk</h5>
-                                <p>26 items</p>
-                            </div>
-                        </div>
-
-
-                        <div className='item'>
-                            <div className='info'>
-                                <img src='https://wp.alithemes.com/html/nest/demo/assets/imgs/shop/cat-13.png'/>
-                                <h5>Cake & Milk</h5>
-                                <p>26 items</p>
-                            </div>
-                        </div>
-
-
-                        <div className='item'>
-                            <div className='info'>
-                                <img src='https://wp.alithemes.com/html/nest/demo/assets/imgs/shop/cat-5.png'/>
-                                <h5>Cake & Milk</h5>
-                                <p>26 items</p>
-                            </div>
-                        </div>
-
-                        
-                        <div className='item'>
-                            <div className='info'>
-                                <img src='https://wp.alithemes.com/html/nest/demo/assets/imgs/shop/cat-2.png'/>
-                                <h5>Cake & Milk</h5>
-                                <p>26 items</p>
-                            </div>
-                        </div>
-
-
-                        <div className='item'>
-                            <div className='info'>
-                                <img src='https://wp.alithemes.com/html/nest/demo/assets/imgs/shop/cat-4.png'/>
-                                <h5>Cake & Milk</h5>
-                                <p>26 items</p>
-                            </div>
-                        </div>
-
-
-                        <div className='item'>
-                            <div className='info'>
-                                <img src='https://wp.alithemes.com/html/nest/demo/assets/imgs/shop/cat-13.png'/>
-                                <h5>Cake & Milk</h5>
-                                <p>26 items</p>
-                            </div>
-                        </div>
-
-
-                        <div className='item'>
-                            <div className='info'>
-                                <img src='https://wp.alithemes.com/html/nest/demo/assets/imgs/shop/cat-5.png'/>
-                                <h5>Cake & Milk</h5>
-                                <p>26 items</p>
-                            </div>
-                        </div> */}
-
-
+                    <Slider {...settings} className='cat_slider_Main'  id="cat_slider_Main">
+                        {Array.isArray(allData) && allData.length !== 0 && allData.map((item, index) => {
+                            return (
+                                
+                                
+                                <div className='item' key={index}>
+                                    <Link to={`/cat/${item.name}`}>
+                                        <div className='info' style={{ background: itemBg[index % itemBg.length] , height:'250px' }}>
+                                            <img src={item.images} width="80" alt={item.name} />
+                                            <h5 className='text-capitalize mt-3'>{item.name}</h5>
+                                            <p>View All</p>
+                                        </div>
+                                    </Link>
+                                </div>
+                            );
+                        })}
                     </Slider>
-                </div >
-            </div >
-
-
-
+                </div>
+            </div>
         </>
-    )
-}
+    );
+};
 
 export default CatSlider;

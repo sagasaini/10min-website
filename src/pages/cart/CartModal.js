@@ -1,7 +1,39 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 // import './CartModal.css';
 
 const CartModal = () => {
+    const [cartDetails, setCartDetails] = useState([]);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const fetchCartDetails = async () => {
+            try {
+                const userId=localStorage.getItem('userId')
+
+                const response = await axios.get(`https://10min.in/api/api/cart/get/${userId}`)
+
+                setCartDetails(response.data);
+                setLoading(false);
+            } catch (error) {
+                console.error('Error fetching cart details:', error);
+                setLoading(false);
+            }
+        };
+
+        fetchCartDetails();
+    }, []);
+
+    if (loading) {
+        return <div>Loading...</div>;
+    }
+
+    const calculateTotalPrice = () => {
+        return cartDetails.reduce((total, item) => total + item.subTotal, 0);
+    };
+     console.log(cartDetails)
+     console.log(calculateTotalPrice())
+
     return (
         <div className="cart-modal-rn cart-modal--with-searchbar">
             <div className="CartWrapper__CartContainer">
@@ -26,41 +58,49 @@ const CartModal = () => {
                                         <div className="HeaderStrip__TextWrapper">
                                             <div className="HeaderStrip__Heading">Free delivery in 9 minutes</div>
                                             <div className="HeaderStrip__HighlightContainer">
-                                                <div className="HeaderStrip__Highlight">Shipment of 1 item</div>
+                                                <div className="HeaderStrip__Highlight">Shipment of {cartDetails.length} items</div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div className="widgets__WidgetContainer">
-                            {/* <div className="CartProduct__Container">
-                                <div className="DefaultProductCard__Container">
-                                    <div className="DefaultProductCard__LeftContainer">
-                                        <div className="sc-gsnTZi DefaultProductCard__CustomImage">
-                                            <div className="sc-hKMtZM"></div>
-                                            <img alt="Brown Rolling Paper + Roach with Crushing Tray - Stash Pro" src="https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=135/app/images/products/sliding_image/496994a.jpg?ts=1698309251" loading="lazy" className="sc-jSMfEi" />
-                                        </div>
-                                    </div>
-                                    <div className="DefaultProductCard__RightContainer">
-                                        <div className="DefaultProductCard__ProductTitle">Brown Rolling Paper + Roach with Crushing Tray - Stash Pro</div>
-                                        <div className="DefaultProductCard__VariantAndAddToCartWrapperContainer">
-                                            <div className="DefaultProductCard__ProductVariantContainer">1 pack</div>
-                                        </div>
-                                        <div className="DefaultProductCard__PriceSpeakerContainer">
-                                            <div className="DefaultProductCard__PriceContainer">
-                                                <div className="DefaultProductCard__Price">₹222</div>
+                        {cartDetails.map((item, index) => (
+                            <div className="widgets__WidgetContainer" key={index}>
+                                <div className="CartProduct__Container">
+                                    <div className="DefaultProductCard__Container">
+                                        <div className="DefaultProductCard__LeftContainer">
+                                            <div className="sc-gsnTZi DefaultProductCard__CustomImage">
+                                                <div className="sc-hKMtZM"></div>
+                                                <img alt={item.productTitle} src={item.image} loading="lazy" className="sc-jSMfEi" />
                                             </div>
-                                            <div className="DefaultProductCard__AddToCardContainer">
-                                                <div className="AddToCart__UpdatedButtonContainer">
-                                                    <div className="AddToCart__StyledDiv"><div className="AddToCart__AddMinusIcon">U</div></div>1<div className="AddToCart__StyledDiv2"><div disabled="" className="AddToCart__AddMinusIcon">5</div></div>
+                                        </div>
+                                        <div className="DefaultProductCard__RightContainer">
+                                            <div className="DefaultProductCard__ProductTitle">{item.productTitle}</div>
+                                            <div className="DefaultProductCard__VariantAndAddToCartWrapperContainer">
+                                                <div className="DefaultProductCard__ProductVariantContainer">{item.quantity} pack</div>
+                                            </div>
+                                            <div className="DefaultProductCard__PriceSpeakerContainer">
+                                                <div className="DefaultProductCard__PriceContainer">
+                                                    <div className="DefaultProductCard__Price">₹{item.subTotal}</div>
+                                                </div>
+                                                <div className="DefaultProductCard__AddToCardContainer">
+                                                    <div className="AddToCart__UpdatedButtonContainer">
+                                                        <div className="AddToCart__StyledDiv">
+                                                            <div className="AddToCart__AddMinusIcon">U</div>
+                                                        </div>
+                                                        {item.quantity}
+                                                        <div className="AddToCart__StyledDiv2">
+                                                            <div disabled="" className="AddToCart__AddMinusIcon">5</div>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div> */}
-                        </div>
+                            </div>
+                        ))}
                         <div className="widgets__WidgetContainer"></div>
                         <div className="widgets__WidgetContainer">
                             <div className="BillCard__BillCardWrapper">
@@ -88,7 +128,7 @@ const CartModal = () => {
                                             </div>
                                             <div className="BillCard__BillItemRight">
                                                 <div className="BillCard__BillItemRightHeader">
-                                                    <div className="tw-text-300 tw-font-medium" data-pf="reset" style={{color: 'var(--colors-grey-900)'}}><span data-pf="reset"> <span>₹222</span></span></div>
+                                                    <div className="tw-text-300 tw-font-medium" data-pf="reset" style={{ color: 'var(--colors-grey-900)' }}><span data-pf="reset"> <span>₹{calculateTotalPrice()}</span></span></div>
                                                 </div>
                                             </div>
                                         </div>
@@ -106,7 +146,7 @@ const CartModal = () => {
                                             </div>
                                             <div className="BillCard__BillItemRight">
                                                 <div className="BillCard__BillItemRightHeader">
-                                                    <div className="tw-text-300 tw-font-medium" data-pf="reset" style={{color: 'var(--colors-grey-900)'}}><span data-pf="reset"> <span className="tw-text-grey-700 tw-line-through">₹15</span><span className="tw-text-blue-500"> FREE</span></span></div>
+                                                    <div className="tw-text-300 tw-font-medium" data-pf="reset" style={{ color: 'var(--colors-grey-900)' }}><span data-pf="reset"> <span className="tw-text-grey-700 tw-line-through">₹15</span><span className="tw-text-blue-500"> FREE</span></span></div>
                                                 </div>
                                             </div>
                                         </div>
@@ -124,7 +164,7 @@ const CartModal = () => {
                                             </div>
                                             <div className="BillCard__BillItemRight">
                                                 <div className="BillCard__BillItemRightHeader">
-                                                    <div className="tw-text-300 tw-font-medium" data-pf="reset" style={{color: 'var(--colors-grey-900)'}}><span data-pf="reset"> <span>₹2</span></span></div>
+                                                    <div className="tw-text-300 tw-font-medium" data-pf="reset" style={{ color: 'var(--colors-grey-900)' }}><span data-pf="reset"> <span>₹2</span></span></div>
                                                 </div>
                                             </div>
                                         </div>
@@ -140,7 +180,7 @@ const CartModal = () => {
                                             </div>
                                             <div className="BillCard__BillItemRight">
                                                 <div className="BillCard__BillItemRightHeader">
-                                                    <div className="tw-text-400 tw-font-semibold" style={{color: 'var(--colors-black-900)'}}>₹224</div>
+                                                    <div className="tw-text-400 tw-font-semibold" style={{ color: 'var(--colors-black-900)' }}>₹{calculateTotalPrice() + 2}</div>
                                                 </div>
                                             </div>
                                         </div>

@@ -1,40 +1,30 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useContext } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import './style.css';
-import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
 import VisibilityOffOutlinedIcon from '@mui/icons-material/VisibilityOffOutlined';
 import { Button } from '@mui/material';
-import { useState } from 'react';
-import GoogleImg from '../../assets/images/google.png';
-// import { initializeApp } from "firebase/app";
-// import { getAuth, signInWithEmailAndPassword, GoogleAuthProvider , signInWithPopup } from "firebase/auth";
-// import { app } from '../../firebase';
-
 import Backdrop from '@mui/material/Backdrop';
 import CircularProgress from '@mui/material/CircularProgress';
-
-import { useNavigate } from 'react-router-dom';
-
-import { useContext } from 'react';
-
+import axios from 'axios';
+import GoogleImg from '../../assets/images/google.png';
 import { MyContext } from '../../App';
 
-// const auth = getAuth(app);
-// const googleProvider = new GoogleAuthProvider();
+
 
 const SignIn = () => {
+    const [authChanged, setAuthChanged] = useState(false);
 
     const [showPassword, setShowPassword] = useState(false);
     const [showLoader, setShowLoader] = useState(false);
     const [formFields, setFormFields] = useState({
         email: '',
         password: '',
-    })
+    });
 
     const context = useContext(MyContext);
-    const history = useNavigate();
+    const navigate = useNavigate();
 
     const onChangeField = (e) => {
         const name = e.target.name;
@@ -43,38 +33,50 @@ const SignIn = () => {
         setFormFields(() => ({
             ...formFields,
             [name]: value,
-        }))
-    }
+        }));
+    };
 
-    const signIn = () => {
+    
+
+    const signIn = async () => {
         if (formFields.email !== "" && formFields.password !== "") {
             setShowLoader(true);
-            // Mock sign-in process
-            setTimeout(() => {
-                setShowLoader(false);
-                setFormFields({
-                    email: '',
-                    password: '',
+            try {
+                const response = await axios.post('https://10min.in/api/api/user/signin', {
+                    email: formFields.email,
+                    password: formFields.password,
                 });
-                localStorage.setItem('isLogin', true); 
+
+                // Handle success
+                setShowLoader(false);
+                console.log('User signed in successfully!', response.data);
+
+                localStorage.setItem('isLogin', true);
+                localStorage.setItem('userId', response.data.user._id);
+                localStorage.setItem('token', response.data.token);
                 context.signIn();
-                history('/');
-            }, 2000);
+                setAuthChanged(!authChanged); 
+                navigate('/');
+            } catch (error) {
+                setShowLoader(false);
+                console.error('Error signing in:', error);
+                alert(error.response?.data?.message || 'Failed to sign in');
+            }
         } else {
             alert("Please fill all the details");
         }
-    }
+    };
 
-    const signInWithGoogle = () => {
-        setShowLoader(true);
-        // Mock Google sign-in process
-        setTimeout(() => {
-            setShowLoader(false);
-            localStorage.setItem('isLogin', true); 
-            context.signIn();
-            history('/');
-        }, 2000);
-    }
+    // const signInWithGoogle = () => {
+    //     setShowLoader(true);
+    //     // Mock Google sign-in process
+    //     setTimeout(() => {
+    //         setShowLoader(false);
+    //         localStorage.setItem('isLogin', true);
+    //         context.signIn();
+    //         navigate('/');
+    //     }, 2000);
+    // };
 
     return (
         <>
@@ -109,9 +111,7 @@ const SignIn = () => {
                                     <TextField id="password" type={showPassword === false ? 'password' : 'text'} name='password' label="Password" className='w-100'
                                         onChange={onChangeField} value={formFields.password} />
                                     <Button className='icon' onClick={() => setShowPassword(!showPassword)}>
-                                        {
-                                            showPassword === false ? <VisibilityOffOutlinedIcon /> : <VisibilityOutlinedIcon />
-                                        }
+                                        {showPassword === false ? <VisibilityOffOutlinedIcon /> : <VisibilityOutlinedIcon />}
                                     </Button>
                                 </div>
                             </div>
@@ -120,14 +120,16 @@ const SignIn = () => {
                                 <Button className='btn btn-g btn-lg w-100' onClick={signIn}>Sign In</Button>
                             </div>
 
-                            <div className='form-group mt-5 mb-4 w-100 signInOr'>
+                            {/* <div className='form-group mt-5 mb-4 w-100 signInOr'>
                                 <p className='text-center'>OR</p>
                                 <Button className='w-100' variant="outlined" onClick={signInWithGoogle}><img src={GoogleImg} alt="Google logo" />
                                     Sign In with Google</Button>
-                            </div>
+                            </div> */}
 
                             <p className='text-center'>Not have an account
                                 <b> <Link to="/signup">Sign Up</Link>
+                                </b>/
+                                <b> <Link to="/forgot">forgot password </Link>
                                 </b>
                             </p>
                         </form>
@@ -135,7 +137,7 @@ const SignIn = () => {
                 </div>
             </section>
         </>
-    )
-}
+    );
+};
 
 export default SignIn;

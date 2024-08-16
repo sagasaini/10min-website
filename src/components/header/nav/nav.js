@@ -8,35 +8,10 @@ import HeadphonesOutlinedIcon from '@mui/icons-material/HeadphonesOutlined';
 import { MyContext } from '../../../App';
 
 const Nav = (props) => {
-    const [navData, setNavData] = useState([
-        {
-            cat_name: 'groceries',
-            items: [
-                { cat_name: 'dals and pulses' },
-                { cat_name: 'Ghee & Oils' },
-                { cat_name: 'Atta & Flours' },   
-                { cat_name: 'masalas spices' }
-            ]
-        },
-        {
-            cat_name: 'Electronics',
-            items: [
-                { cat_name: 'Mobiles & Tablets' },
-                { cat_name: 'TV & Speaker' }
-               
-                
-            ]
-        },
-        {
-            cat_name: 'Fashion',
-            items: [
-                { cat_name: 'Men Western Wear' },
-                { cat_name: 'Women Western Wear' }
-            ]
-        }
-    ]);
+    const [categories, setCategories] = useState([]);
+    const [subCategories, setSubCategories] = useState([]);
+    const [navData, setNavData] = useState([]);
     const [isOpenNav, setIsOpenNav] = useState(false);
-    const [windowWidth, setWindowWidth] = useState(window.innerWidth);
     const [openDropdownMenu, setDropdownMenu] = useState(false);
     const [openDropdownMenuIndex, setDropdownMenuIndex] = useState(null);
     const [openMegaMenu, setOpenMegaMenu] = useState(false);
@@ -46,6 +21,65 @@ const Nav = (props) => {
     useEffect(() => {
         setIsOpenNav(props.openNav);
     }, [props.openNav]);
+
+    useEffect(() => {
+        const fetchCategories = async () => {
+            try {
+                const response = await fetch('https://10min.in/api/api/category');
+                const result = await response.json();
+                if (response.ok && Array.isArray(result.categoryList)) {
+                    const uniqueCategories = result.categoryList.reduce((unique, category) => {
+                        if (!unique.find(cat => cat.name === category.name)) {
+                            unique.push({ id: category.id, name: category.name });
+                        }
+                        return unique;
+                    }, []);
+
+                    setCategories(uniqueCategories);
+                } else {
+                    console.error('API response is not an array or error occurred:', result);
+                    setCategories([]);
+                }
+            } catch (error) {
+                console.error('Error fetching categories:', error);
+                setCategories([]);
+            }
+        };
+
+        fetchCategories();
+    }, []);
+
+    useEffect(() => {
+        const fetchSubCategories = async () => {
+            try {
+                const response = await fetch('https://10min.in/api/api/subCat');
+                const result = await response.json();
+                if (response.ok && Array.isArray(result.subCategoryList)) {
+                    setSubCategories(result.subCategoryList);
+                } else {
+                    console.error('API response is not an array or error occurred:', result);
+                    setSubCategories([]);
+                }
+            } catch (error) {
+                console.error('Error fetching subcategories:', error);
+                setSubCategories([]);
+            }
+        };
+
+        fetchSubCategories();
+    }, []);
+
+    useEffect(() => {
+        const combinedNavData = categories.map(category => ({
+            cat_name: category.name,
+            cat_image: category.images,
+            items: subCategories
+                .filter(subCat => subCat.category === category.id)
+                .map(subCat => ({ cat_name: subCat.subCat }))
+        }));
+
+        setNavData(combinedNavData);
+    }, [categories, subCategories]);
 
     const closeNav = () => {
         props.closeNav();
@@ -89,24 +123,24 @@ const Nav = (props) => {
                     <div className={`dropdown_menu megaMenu w-100 ${openMegaMenu && 'open'}`}>
                         <div className='row'>
                             {navData.length !== 0 && navData.map((item, index) => (
-                                <div className='col' key={index}>
-                                    <a href={`/cat/${item.cat_name.toLowerCase()}`}>
-                                        <h4 className='text-g text-capitalize'>{item.cat_name}</h4>
-                                    </a>
-                                    {item.items.length !== 0 && (
+                                <div className='col' key={index} >
+                                    <Link to={`/cat/${item.cat_name}`}>
+                                        <h4 onClick={() => setOpenMegaMenu(!openMegaMenu)} className='text-g text-capitalize'>  {item.cat_name}</h4>
+                                    </Link>
+                                    {/* {item.items.length !== 0 && (
                                         <ul className='mt-4 mb-0'>
                                             {item.items.map((item_, index_) => (
                                                 <li key={index_}>
-                                                    <Link onClick={props.closeNav} to={`/cat/${item.cat_name.toLowerCase()}/${item_.cat_name.replace(/\s/g, '-').toLowerCase()}`}>{item_.cat_name}</Link>
+                                                    <Link onClick={props.closeNav} to={`/cat/${item.cat_name}/${item_.cat_name}`}>{item_.cat_name}</Link>
                                                 </li>
                                             ))}
                                         </ul>
-                                    )}
+                                    )} */}
                                 </div>
                             ))}
-                            <div className='col'>
+                            {/* <div className='col'>
                                 <img src="https://wp.alithemes.com/html/nest/demo/assets/imgs/banner/banner-menu.png" className='w-100' alt="banner" />
-                            </div>
+                            </div> */}
                         </div>
                     </div>
                 )}

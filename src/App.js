@@ -31,6 +31,15 @@ import HomeLayout from './pages/HomeLayout.js';
 import Order from './pages/orders/Order.js';
 import Dashboard from './components/Dashboard/Dashboard.js';
 import AvailableCitiesModal from './components/Dashboard/AvailableCitiesModal.js';
+import UserDetails from './components/Dashboard/Subsection/UserDetails.js';
+import Forgot from './pages/ForgotPassword/Forgot.js';
+import OrderStatus from './pages/orderstatus/OrderStatus.js';
+import OrderDetail from './pages/orders/OrderDetail.js';
+import PrivacyPage from './pages/PrivacyPolicy/PrivacyPage.js';
+import TermsCondition from './pages/Terms/TermsCondition.js';
+import CartPanel from './components/cart/CartPanel.js';
+import SearchResults from './pages/Home/searchproduct/SearchResults.js';
+import Location from './components/header/nav/Location.js';
 
 const MyContext = createContext();
 
@@ -44,6 +53,7 @@ function App() {
   const [isLogin, setIsLogin] = useState();
   const [isOpenFilters, setIsopenFilters] = useState(false);
   const [cartTotalAmount, setCartTotalAmount] = useState();
+  
 
   useEffect(() => {
     getCartData("http://localhost:5000/cartItems");
@@ -135,15 +145,26 @@ function App() {
         <Routes>
           <Route path="/" element={<HomeLayout />}>
             <Route index element={<Home data={data.productData} />} />
-            <Route path="cat/:id" element={<Listing data={data.productData} single={true} />} />
-            <Route path="cat/:id/:id" element={<Listing data={data.productData} single={false} />} />
+            <Route path="cat/:categoryId" element={<Listing data={data.productData} single={true} />} />
+<Route path="cat/:categoryId/:subCatId" element={<Listing data={data.productData} single={false} />} />
+<Route path="/search/:query" element={<SearchResults />} />
+
             <Route path="product/:id" element={<DetailsPage data={data.productData} />} />
             <Route path="cart" element={<Cart />} />
             <Route path="signIn" element={<SignIn />} />
             <Route path="signUp" element={<SignUp />} />
+            <Route path="signUp" element={<SignUp />} />
+            <Route path="forgot" element={<Forgot />} />
+
             <Route path="checkout" element={<Checkout />} />
             <Route path="contact-us" element={<ContactPage />} />
             <Route path="about-us" element={<AboutUs />} />
+            <Route path="/cart" element={<CartPanel />} />
+
+            <Route path="privacy-policy" element={<PrivacyPage />} />
+            <Route path="terms-and-condition" element={<TermsCondition />} />
+
+
             <Route path="tracking" element={<DeliveryTracking />} />
             <Route path="wishlist" element={<Wishlist />} />
             <Route path="profile" element={<Profile />} />
@@ -151,6 +172,12 @@ function App() {
             <Route path="vendor" element={<VendorList />} />
             <Route path="cart-items" element={<CartModal />} />
             <Route path="order" element={<Order />} />
+            <Route path="order-status" element={<OrderStatus />} />
+            <Route path="setting/:id" element={<OrderDetail />} />
+            <Route path="location" element={<Location />} />
+
+
+
             
             <Route path="*" element={<NotFound />} />
             
@@ -158,6 +185,7 @@ function App() {
           </Route>
           <Route path="dashboard" element={<Dashboard />} />
           <Route path="dashboard/avilable-cities" element={<AvailableCitiesModal />} />
+          <Route path="/user/:userId" component={<UserDetails />} />
 
         </Routes>
       </MyContext.Provider>

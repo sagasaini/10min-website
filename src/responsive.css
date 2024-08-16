@@ -78,13 +78,15 @@
 
 
 @media only screen and (min-width:320px) and (max-width:992px){
-
+  
   body,html{overflow-x: hidden !important;}
 
-  .container-fluid{padding: 0px 25px !important;}
+  /* .container-fluid{padding: 0px 25px !important;} */
   .res-hide{display: none !important;}
   .res-full{width: 100%;}
-
+  .homeSlider{
+    padding-top: 100px !important;
+  }
   .headerWrapper .part1{max-width: 100%; flex:0 0 100%; justify-content: space-between;}
   .jEmEUh{display: flex;
     height: fit-content;
@@ -110,7 +112,7 @@
   .nav.click{pointer-events: inherit !important;}
   /* .afterHeader{margin-top: 85px !important;} */
 
-  .headerSearch{position: fixed !important; top: 0px; right: -100%; opacity: 0; z-index: 100; width: 100%; height: 100% !important; background: #fff; align-items: flex-start !important; flex-direction: column !important; padding: 70px !important; padding-top: 90px !important; border: 0px !important; transition: all 0.5s ease-in-out;}
+  .headerSearch{position: absolute !important; top: 0px; right: -100%; opacity: 0; z-index: 100; width: 100%; height: 100% !important; background: #fff; align-items: flex-start !important; flex-direction: column !important; padding: 70px !important; padding-top: 90px !important; border: 0px !important; transition: all 0.5s ease-in-out;}
 
   
   .headerSearch.open{opacity: 1; right: 0px;}
@@ -152,17 +154,17 @@
   .megaMenu .row .col{max-width: 100% !important; width: 100% !important; margin-bottom: 20px !important;}
 
   .catSliderSection{padding-top: 0px !important; padding-bottom: 0px !important;}
-  .cat_slider_Main .slick-track{white-space: nowrap !important; overflow-x: scroll !important; display: block !important; width: 100% !important;}
+  .cat_slider_Main .slick-track{white-space: nowrap !important; overflow-x: scroll !important; display: flex !important; width: 100% !important;}
 
   .cat_slider_Main .slick-track::-webkit-scrollbar{display: none !important;}
 
-  .cat_slider_Main .slick-track .slick-slide{display: inline-block !important; width:200px !important; float: none !important;}
+  .cat_slider_Main .slick-track .slick-slide{display: inline-block !important; width:300px !important; float: none !important;}
 
   .cat_slider_Main .item:hover .info, .cat_slider_Main .slick-current .info{transform: scale(1) !important; box-shadow: none !important;}
 
   .cat_slider_Main.slick-initialized .slick-list{padding-left:0px !important ;}
   
-
+  /* .info{width: 250px !important; } */
   .hd{margin-bottom: 15px !important;}
 
   .bannerSection .row{display: block !important; white-space: nowrap !important; overflow-x: scroll !important;

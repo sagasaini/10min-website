@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import '../header/Header.css';
 // import Logo from '../../assets/images/logo.svg';
-import Logo from '../../assets/imgs/theme/logo.jpg'
+import Logo from '../../assets/images/logo.jpg'
 import SearchIcon from '@mui/icons-material/Search';
 import Select from '../selectDrop/select';
 import axios from 'axios';
@@ -30,10 +30,16 @@ import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
 import CartModal from '../../pages/cart/CartModal';
 import { CartButton, CartPanel } from '../cart';
+import { showCart } from '../../store/ui';
+import {  useAppDispatch } from '../../hooks/useAppDispatch';
+import Product from './../product/index';
+
 
 const Header = (props) => {
-
+    const dispatch = useAppDispatch();
     const [isCartOpen, setIsCartOpen] = useState(false);
+    const [authChanged, setAuthChanged] = useState(false);
+    const [relatedProducts, setRelatedProducts] = useState([])
 
     const toggleCartModal = () => {
         setIsCartOpen(!isCartOpen);
@@ -50,7 +56,7 @@ const Header = (props) => {
         setIsModalOpen(false);
     };
 
-
+     
     const [isOpenDropDown, setisOpenDropDown] = useState(false);
     const [isOpenAccDropDown, setisOpenAccDropDown] = useState(false);
     
@@ -58,8 +64,10 @@ const Header = (props) => {
     const [isopenSearch, setOpenSearch] = useState(false);
     const [isOpenNav, setIsOpenNav] = useState(false);
 
+
     const headerRef = useRef();
     const searchInput = useRef();
+
 
     const context = useContext(MyContext);
     const history = useNavigate();
@@ -121,14 +129,34 @@ const Header = (props) => {
         });
     }, []);
 
+
+    useEffect(() => {
+        if (authChanged) {
+            window.location.reload();
+        }
+    }, [authChanged]);
+    
+    
+
     const signOut = () => {
+        localStorage.clear();
         context.signOut();
+        setAuthChanged(!authChanged);  // Toggle authChanged state
         history('/');
     };
+    
 
+    const searchProducts = () => {
+        const name = searchInput.current.value;
+        history(`/search/${name}`); 
+        // setOpenSearch(false)
+        // Navigate to the search results page with the query as a URL parameter
+        
+    };
     const openSearch = () => {
         setOpenSearch(true);
         searchInput.current.focus();
+        searchProducts()
     };
 
     const closeSearch = () => {
@@ -205,18 +233,29 @@ const Header = (props) => {
                                 <div className={`headerSearch align-items-center ${isopenSearch === true ? 'open' : ''}`}>
                              
                                    
-                                    <div className='search'>
-                                        <input type='text' placeholder='Search for items...' ref={searchInput} />
-                                        <SearchIcon className="searchIcon cursor" />
-                                    </div>
+                                <div className='search'>
+                                <input 
+    type='text' 
+    placeholder='Search for items...' 
+    ref={searchInput} 
+    onKeyDown={(e) => {
+        if (e.key === 'Enter') {
+            searchProducts();
+        }
+    }}
+/>
+    <SearchIcon className="searchIcon cursor" onClick={searchProducts} />
+</div>
+
                                 </div>
+                                <SearchIcon className="searchIcon cursor view" onClick={openSearch }  />
                             </div>
                             </div>
 
                             <div className='  align-items-center part3 res-hide'>
                                 <div className='  align-items-center'>
                                     {/* <div className='countryWrapper'>
-                                        <Select data={countryList} placeholder={'Your Location'} icon={<LocationOnOutlinedIcon style={{ opacity: '0.5' }} />} />
+                                        <Select data={countryList} placeholder={'Your Location'} icon={<LocationOnOutlinedIcon style={{ opacity: '0.5' }} />} /item
                                     </div> */}
                                     <ClickAwayListener onClickAway={() => setisOpenDropDown(false)}>
                                         <ul className=' flex list list-inline mb-0 headerTabs'>
@@ -286,7 +325,18 @@ const Header = (props) => {
             </div>
 
             <div className='afterHeader'>
-
+            {relatedProducts.length > 0 && (
+                    <div className='container-fluid'>
+                        <h2 className='hd mb-0 mt-0'>All Products</h2>
+                        <div className='productGrid flex flex-wrap -mx-3 justify-center'>
+                            {relatedProducts.map((product, index) => (
+                                <div className='productItem w-full sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/5 p-3' key={index}>
+                                    <Product tag={product.type} item={product} />
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                )}
             </div>
 
             {isOpenAccDropDown &&
@@ -295,7 +345,7 @@ const Header = (props) => {
                     <ul className='dropdownMenu dropdownMenuAcc' onClick={closeNav}>
                         <li><Button className='align-items-center'><Link to="/setting"><Person2OutlinedIcon /> My Account</Link></Button></li>
                         {/* <li><Button className='align-items-center'><Link to=""><img src={IconCompare} alt="Compare" />Compare</Link></Button></li> */}
-                        <li><Button className='align-items-center'><Link to="/cart-items"><img src={IconCart} alt="Cart" />Cart</Link></Button></li>
+                        <li ><Button className='align-items-center '  onClick={() => dispatch(showCart())}><Link to=""><img src={IconCart} alt="Cart" />Cart</Link></Button></li>
                         <li><Button><Link to="/setting"><LocationOnOutlinedIcon /> Order Tracking</Link></Button></li>
                         {/* <li><Button><Link to="wishlist"><FavoriteBorderOutlinedIcon /> My Wishlist</Link></Button></li> */}
                         <li><Button><Link to="/setting"><SettingsOutlinedIcon /> Setting</Link></Button></li>
@@ -305,6 +355,7 @@ const Header = (props) => {
             }
         </>
     );
+
 }
 
 export default Header;

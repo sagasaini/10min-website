@@ -40,6 +40,7 @@ const Sidebar = (props) => {
     var catLength = 0;
     var lengthArr = [];
     useEffect(() => {
+        // console.log(props.data);
         props.data?.length !== 0 &&
         props.data?.map((item, index) => {
                 item.items.length !== 0 &&
@@ -125,12 +126,12 @@ const Sidebar = (props) => {
                         {
                             props.data?.length !== 0 && props.data.map((item, index) => {
                                 return (
-                                    <Link to={`/cat/${item.cat_name.toLowerCase()}`}>
+                                    <Link to={`/cat/${item.subCat}`}>
                                         <div className='catItem d-flex align-items-center'>
-                                            <span className='img'><img src='https://wp.alithemes.com/html/nest/demo/assets/imgs/theme/icons/category-1.svg' width={30} /></span>
-                                            <h4 className='mb-0 ml-3 mr-3 text-capitalize'>{item.cat_name}</h4>
-                                            <span className='d-flex align-items-center justify-content-center rounded-circle ml-auto'>
-                                            {totalLength[index]}</span>
+                                            <span className='img'><img src={item.image} width={30} /></span>
+                                            <Link onClick={props.closeNav} to={`/cat/${item.category.name}/${item.subCat}`}> <h4 className='mb-0 ml-3 mr-3 text-capitalize'>{item.subCat}</h4></Link>
+                                            {/* <span className='d-flex align-items-center justify-content-center rounded-circle ml-auto'>
+                                            {totalLength[index]}</span> */}
                                         </div>
                                     </Link>
                                 )
@@ -142,7 +143,7 @@ const Sidebar = (props) => {
                 </div>
 
 
-                <div className='card border-0 shadow'>
+                {/* <div className='card border-0 shadow'>
                     <h3>Fill by price</h3>
 
                     <RangeSlider value={value} onInput={setValue} min={100} max={60000} step={5} />
@@ -204,11 +205,11 @@ const Sidebar = (props) => {
                         <Button className='btn btn-g w-100'  onClick={() => context.openFilters()}><FilterAltOutlinedIcon /> Filter</Button>
                     </div>
 
-                </div>
+                </div> */}
 
 
 
-                <img src={bannerImg} className='w-100' />
+                {/* <img src={bannerImg} className='w-100' /> */}
 
             </div>
         </>

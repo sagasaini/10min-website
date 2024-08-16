@@ -1,17 +1,29 @@
-import { IoClose } from "react-icons/io5";
-import { FiChevronRight } from "react-icons/fi";
-import { useAppDispatch } from "../../hooks/useAppDispatch";
-import { useAppSelector } from "../../hooks/useAppSelector";
-import { hideCart } from "../../store/ui";
-import AddToCartButton from "../shared/AddToCartButton";
-import Misc from "../../lib/data/layout.json";
-import SuggestedItems from "./SuggestedItems";
-import { shuffleItems } from "../../utils/helper";
-import { useState } from "react";
-import AddressModal from "./AddressModal";
+import React, { useState, useEffect } from 'react';
+import { IoClose } from 'react-icons/io5';
+import { FiChevronRight } from 'react-icons/fi';
+import axios from 'axios';
+import { useAppDispatch } from '../../hooks/useAppDispatch';
+import { useAppSelector } from '../../hooks/useAppSelector';
+import { fetchCartData, removeItem, } from '../../store/cart';
+import { hideCart } from '../../store/ui';
+import AddressModal from './AddressModal';
+import AddCartItem from './AddCartItem';
 
 const CartPanelItem = (props) => {
-  const { image, title, subTitle, price, mrp } = props.product;
+  const { image, productTitle, price, quantity, subTotal, productId, weight } = props.product;
+  const dispatch = useAppDispatch();
+  const userId = localStorage.getItem('userId');
+
+  const handleRemove = async () => {
+    try {
+      await axios.delete(`https://10min.in/api/api/cart/delete/${userId}/${productId}`);
+      dispatch(removeItem(productId)); // Dispatch the remove item action
+      console.log("Item removed from cart");
+    } catch (error) {
+      console.error("Failed to remove item from cart:", error);
+    }
+  };
+
   return (
     <div className="flex p-4 gap-4 border-t _border-muted">
       <div>
@@ -21,25 +33,37 @@ const CartPanelItem = (props) => {
       </div>
       <div className="text-left flex flex-col flex-1">
         <div className="_text-default text-[15px] leading-tight mb-2">
-          {title}
+          {productTitle}
         </div>
-        <div className="text-sm _text-muted truncate mb-3">{subTitle}</div>
         <div className="flex items-center justify-between mt-auto">
-          {mrp ? (
-            <div className="flex gap-2 items-center">
-              <span className="text-[15px] text-black font-bold leading-none">
-                ₹{price}
-              </span>
-              <del className="text-[14px] text-gray-500">₹{mrp}</del>
-            </div>
-          ) : (
-            <div>
-              <span className="text-[14px] _text-default">₹{price}</span>
-            </div>
-          )}
-          <div className="h-9 w-[130px]">
-            <AddToCartButton product={props.product} />
+          <div>
+            <span className="text-[14px] _text-default">₹{price}</span>
           </div>
+          <div className="h-9 w-[130px]">
+            <AddCartItem
+              style={{ position: 'relative', bottom: '40px' }}
+              product={props.product}
+            />
+          </div>
+        </div>
+        <div style={{ width: '70%' }} className="items-center justify-between mt-auto">
+          <div>
+            <span className="text-[14px] _text-default">Quantity: {quantity}</span>
+          </div>
+          <div style={{ width: '50%' }}>
+            <span className="text-[14px] _text-default">Subtotal: ₹{subTotal}</span>
+          </div>
+          <div style={{ width: '50%' }}>
+            <span className="text-[14px] _text-default">Weight: {weight}</span>
+          </div>
+        </div>
+        <div className="flex items-center justify-end mt-2">
+          <button
+            onClick={handleRemove}
+            className="text-red-500 hover:text-red-700 text-sm font-medium"
+          >
+            Remove
+          </button>
         </div>
       </div>
     </div>
@@ -61,18 +85,15 @@ const CartPanel = () => {
   };
 
   const dispatch = useAppDispatch();
-  const { totalAmount, totalQuantity, cartItems, billAmount, discount } = useAppSelector((state) => state.cart);
-  const productItems = Misc.filter((item) => item.type === 77).map((el) => el.objects);
-  const allProducts = [];
+  const { totalAmount, totalQuantity, cartItems, billAmount, discount, status } = useAppSelector(
+    (state) => state.cart
+  );
 
-  productItems.forEach((obj) => {
-    const items = obj[0].data.products.map((product) => product[0]);
-    allProducts.push(...items);
-  });
-
-  const addedProducts = cartItems.map((item) => item.product.id);
-  const otherProducts = allProducts.filter((item) => !addedProducts.includes(item.product_id.toString()));
-  const topProducts = shuffleItems(otherProducts).slice(0, 10);
+  useEffect(() => {
+    if (status === 'idle') {
+      dispatch(fetchCartData());
+    }
+  }, [dispatch, status]);
 
   return (
     <div className="fixed inset-0 z-50 overflow-hidden p-4">
@@ -89,7 +110,15 @@ const CartPanel = () => {
                 <h2 className="font-extrabold text-2xl _text-default">My Cart</h2>
                 <IoClose size={24} className="cursor-pointer" onClick={() => dispatch(hideCart())} />
               </div>
-              {totalQuantity === 0 ? (
+              {status === 'loading' ? (
+                <div className="flex-1 bg-white p-6 flex flex-col justify-center items-center text-center">
+                  <p>Loading...</p>
+                </div>
+              ) : status === 'failed' ? (
+                <div className="flex-1 bg-white p-6 flex flex-col justify-center items-center text-center">
+                  <p>Failed to load cart items.</p>
+                </div>
+              ) : totalQuantity === 0 ? (
                 <div className="flex-1 bg-white p-6 flex flex-col justify-center items-center text-center">
                   <img src="empty-cart.webp" alt="" className="h-36 w-36" />
                   <h3 className="font-bold text-lg leading-tight">
@@ -122,69 +151,45 @@ const CartPanel = () => {
                         </div>
                         <div className="divide-y-1">
                           {cartItems.map((item) => (
-                            <CartPanelItem key={item.product.id} {...item} />
+                            <CartPanelItem key={item.productId} product={item} />
                           ))}
                         </div>
                       </div>
-                      <div className="bg-white">
-                        <div className="font-bold text-xl text-black pt-5 px-4">
-                          Before you checkout
-                        </div>
-                        <div className="relative px-3 my-2">
-                          {/* <SuggestedItems topItems={topProducts} /> */}
-                        </div>
+                      <div className="px-4 flex items-center justify-between">
+                        <div className="text-base _text-default font-bold">Bill Details</div>
                       </div>
-                      <div className="bg-white">
-                        <div className="font-bold text-xl text-black pt-5 px-4">
-                          Bill Details
-                        </div>
-                        <div className="px-4 text-xs space-y-2 py-2">
-                          <div className="flex items-start justify-between _text-default">
-                            <span>MRP</span>
-                            <span>₹{totalAmount}</span>
+                      <div className="bg-white border-y _border-muted">
+                        <div className="divide-y-1">
+                          <div className="flex justify-between px-4 py-2">
+                            <div className="_text-muted text-xs">Subtotal</div>
+                            <div className="_text-muted text-xs">₹{totalAmount}</div>
                           </div>
-                          <div className="flex items-start justify-between _text-default">
-                            <span>Product discount</span>
-                            <span>- ₹{discount}</span>
+                          <div className="flex justify-between px-4 py-2">
+                            <div className="_text-muted text-xs">Discount</div>
+                            <div className="_text-muted text-xs">- ₹{discount}</div>
                           </div>
-                          <div className="flex items-start justify-between _text-default">
-                            <p className="flex flex-col">
-                              <span>Delivery charge</span>
-                              <span className="text-[#0c831f]">
-                                Hooray! You saved ₹15 on delivery charge
-                              </span>
-                            </p>
-                            <span>
-                              ₹15 <span className="text-[#0c831f]">free</span>
-                            </span>
+                          <div className="flex justify-between px-4 py-2">
+                            <div className="_text-muted text-xs">Delivery Charges</div>
+                            <div className="_text-muted text-xs">₹0</div>
                           </div>
-                          <div className="flex items-start justify-between text-[14px] text-black font-bold py-2">
-                            <span>Bill total</span>
-                            <span>₹{billAmount}</span>
+                          <div className="flex justify-between px-4 py-2">
+                            <div className="_text-muted text-xs">Bill Amount</div>
+                            <div className="_text-muted text-xs">₹{billAmount}</div>
                           </div>
-                        </div>
-                        <div className="px-4 py-2 border-t-2 bg-neutral-100 text-xs _text-muted border-b _border-muted">
-                          Promo code can be applied on payments screen
                         </div>
                       </div>
                     </div>
                   </div>
-                  <div className="sticky bottom-0 bg-white px-4 pt-2 pb-4 min-h-[68px] _shadow_sticky">
-                    <div
-                      className="bg-[#0c831f] cursor-pointer text-white flex items-center px-3 py-3 rounded-[4px] font-medium text-[14px]"
+                  <footer className="sticky bottom-0 z-10 p-4 bg-white border-t">
+                    <button
+                      type="button"
+                      className="bg-[#0c831f] w-full rounded-[8px] px-4 py-3 leading-none text-[13px] font-medium text-white cursor-pointer"
                       onClick={openAddressModal}
                     >
-                      <div className="font-bold">{totalQuantity} Items</div>
-                      <div className="font-bold">&nbsp; &middot; &nbsp;</div>
-                      <div>
-                        <span className="font-extrabold">₹{billAmount}</span>
-                        <del className="text-sm ml-1">₹{totalAmount}</del>
-                      </div>
-                      <div className="ml-auto flex items-center font-bold">
-                        Proceed <FiChevronRight size={18} className="ml-2" />
-                      </div>
-                    </div>
-                  </div>
+                      Proceed to Pay ₹{billAmount}
+                      <FiChevronRight />
+                    </button>
+                  </footer>
                 </>
               )}
             </>

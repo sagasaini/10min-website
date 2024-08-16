@@ -1,43 +1,40 @@
-import React from 'react';
-import './Order.css'
+import React, { useEffect, useState } from 'react';
+import './Order.css';
 
-const orders = [
-  {
-    id: 1,
-    shop: 'xyz ',
-    location: 'Rajendra Nagar',
-    orderId: '178727728384680',
-    date: 'Sun, Jun 30, 2024, 08:05 PM',
-    items: 'Realme c3',
-    totalPaid: 148,
-    status: 'active', // could be 'active' or 'ordered'
-  },
-  {
-    id: 1,
-    shop: 'xyz',
-    location: 'Rajendra Nagar',
-    orderId: '178727728384680',
-    date: 'Sun, Jun 30, 2024, 08:05 PM',
-    items: 'Realme c3',
-    totalPaid: 148,
-    status: 'active', // could be 'active' or 'ordered'
-  },
-  {
-    id: 1,
-    shop: 'xyz',
-    location: 'Rajendra Nagar',
-    orderId: '178727728384680',
-    date: 'Sun, Jun 30, 2024, 08:05 PM',
-    items: 'realme c3',
-    totalPaid: 148,
-    status: 'ordered', // could be 'active' or 'ordered'
-  },
-  // Add more orders here
-];
+const OrderPage = ({ userId }) => {
+  const [orders, setOrders] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-const OrderPage = () => {
+  useEffect(() => {
+    const fetchOrders = async () => {
+      try {
+        const response = await fetch(`https://10min.in/api/api/orders/${userId}`);
+        if (!response.ok) {
+          throw new Error('Failed to fetch orders');
+        }
+        const data = await response.json();
+        setOrders(data);
+        setLoading(false);
+      } catch (err) {
+        setError(err.message);
+        setLoading(false);
+      }
+    };
+
+    fetchOrders();
+  }, [userId]);
+
   const activeOrders = orders.filter(order => order.status === 'active');
   const pastOrders = orders.filter(order => order.status === 'ordered');
+
+  if (loading) {
+    return <p>Loading...</p>;
+  }
+
+  if (error) {
+    return <p>Error: {error}</p>;
+  }
 
   return (
     <div className="order-page">
@@ -52,8 +49,8 @@ const OrderPage = () => {
               <p>ORDER #{order.orderId} | {order.date}</p>
               <p>{order.items}</p>
               <div className="order-actions">
-                <button className="get-help-btn">GET HELP</button>
-                <p className="total-paid">Total Paid: ₹{order.totalPaid}</p>
+                {/* <button className="get-help-btn">GET HELP</button> */}
+                <p className="total-paid">Total Paid: ₹{order.amount}</p>
               </div>
             </div>
           </div>

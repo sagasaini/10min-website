@@ -1,15 +1,25 @@
+import React, { useEffect, useState } from 'react';
 import { IoCaretForwardSharp } from 'react-icons/io5';
 import { useAppDispatch } from '../../hooks/useAppDispatch';
 import { useAppSelector } from '../../hooks/useAppSelector';
 import { showCart } from '../../store/ui';
+import { fetchCartData } from '../../store/cart';
 
 const CartButtonBig = () => {
-  const { billAmount, totalQuantity, totalAmount } = useAppSelector(
-    (state) => state.cart
-  );
   const dispatch = useAppDispatch();
+  const { billAmount, totalQuantity, totalAmount, cartItems } = useAppSelector(state => state.cart);
+  const [hasItems, setHasItems] = useState(false);
+  useEffect(() => {
+    const userId = localStorage.getItem('userId'); // Get user ID from local storage
 
-  return totalQuantity > 0 ? (
+    if (userId) {
+      dispatch(fetchCartData()).then(() => {
+        setHasItems(totalQuantity > 0);
+      });
+    }
+  }, [dispatch, totalQuantity]);
+
+  return hasItems ? (
     <div className="fixed bottom-0 lg:hidden w-full p-3 z-10">
       <div
         className="flex items-center rounded-[6px] w-full px-3 py-2 gap-2 font-bold leading-none bg-[#0c831f] cursor-pointer text-white _fab"
@@ -20,7 +30,7 @@ const CartButtonBig = () => {
             {totalQuantity} {totalQuantity > 1 ? 'items' : 'item'}
           </span>
           <span className="tracking-tight text-sm">
-            ₹{billAmount}{' '}
+            ₹{totalAmount}{' '}
             <span className="text-xs font-normal">
               <del className="opacity-80">₹{totalAmount}</del> plus taxes
             </span>{' '}

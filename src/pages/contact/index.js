@@ -26,26 +26,31 @@ const ContactPage = () => {
                             <div className="col-lg-4 mb-lg-0 mb-md-5 mb-sm-5">
                                 <h4 className="mb-20 text-primary">How can we help you?</h4>
                                 <h1 className="mb-30">Let us know how we can help you</h1>
-                                <p className="mb-20">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit tellus, luctus nec ullamcorper mattis, pulvinar dapibus leo.</p>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit tellus, luctus nec ullamcorper mattis, pulvinar dapibus leo.</p>
+                                <p className="mb-20">We are here to make your grocery shopping experience as seamless as possible. Whether you have questions, feedback, or need assistance, we're just a message away. Let us know how we can assist you, and we'll be happy to help.</p>
+                               
                             </div>
                             <div className="col-lg-8">
                                 <div className="row">
                                     <div className="col-lg-6 mb-4">
                                         <h5 className="mb-20">01. Visit Feedback</h5>
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit tellus, luctus nec ullamcorper mattis, pulvinar dapibus leo.</p>
+                                        <p>Your experience matters to us. If you've recently visited our site or used our services, we'd love to hear your thoughts. Your feedback helps us improve and provide you with the best possible service.
+</p>
                                     </div>
                                     <div className="col-lg-6 mb-4">
                                         <h5 className="mb-20">02. Employer Services</h5>
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit tellus, luctus nec ullamcorper mattis, pulvinar dapibus leo.</p>
+                                        <p>Looking to partner with 10min.in for your business needs? Our employer services offer customized solutions to keep your team well-stocked and happy. Reach out to discuss how we can support your business.
+</p>
                                     </div>
                                     <div className="col-lg-6 mb-lg-0 mb-4">
-                                        <h5 className="mb-20 text-primary">03. Billing Inquiries</h5>
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit tellus, luctus nec ullamcorper mattis, pulvinar dapibus leo.</p>
+                                        <h5 className="mb-20 ">03. Billing Inquiries</h5>
+                                        <p>Have questions about your bill or payment? Our billing team is here to assist you with any inquiries or issues. We aim to make your transactions as smooth and transparent as possible.
+
+</p>
                                     </div>
                                     <div className="col-lg-6">
                                         <h5 className="mb-20">04. General Inquiries</h5>
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit tellus, luctus nec ullamcorper mattis, pulvinar dapibus leo.</p>
+                                        <p>For any other questions or concerns, don't hesitate to contact us. Whether it's about our products, services, or anything else, we're here to provide you with the information you need.
+</p>
                                     </div>
                                 </div>
                             </div>
@@ -66,18 +71,18 @@ const ContactPage = () => {
                         <section className="mb-50">
                             <div className="row mb-60">
                                 <div className="col-md-4 mb-4 mb-md-0">
-                                    <h4 className="mb-15 text-primary">Office</h4>
+                                    <h4 className="mb-15 text-primary">Shop</h4>
                                     <address>
-                                        205 North Michigan Avenue, Suite 810<br />
-                                        Chicago, 60601, USA<br />
-                                        <abbr title="Phone">Phone:</abbr> (123) 456-7890<br />
-                                        <abbr title="Email">Email:</abbr> contact@Evara.com<br />
+                                    Bhagat chauraha, near kadambari Hight, Taramandal<br />
+                                    Gorakhpur,  273016, Uttar Pradesh<br />
+                                        <abbr title="Phone">Phone:</abbr> +91-889-696-4674<br />
+                                        <abbr title="Email">Email:</abbr> 000shub000@gamil.com<br />
                                     </address>
-                                    <button className="btn btn-sm font-weight-bold text-white mt-20 border-radius-5 btn-shadow-primary hover-up">
+                                    {/* <button className="btn btn-sm font-weight-bold text-white mt-20 border-radius-5 btn-shadow-primary hover-up">
                                         <i className="fi-rs-marker mr-5"></i>View map
-                                    </button>
+                                    </button> */}
                                 </div>
-                                <div className="col-md-4 mb-4 mb-md-0">
+                                {/* <div className="col-md-4 mb-4 mb-md-0">
                                     <h4 className="mb-15 text-primary">Studio</h4>
                                     <address>
                                         205 North Michigan Avenue, Suite 810<br />
@@ -88,8 +93,8 @@ const ContactPage = () => {
                                     <button className="btn btn-sm font-weight-bold text-white mt-20 border-radius-5 btn-shadow-primary hover-up">
                                         <i className="fi-rs-marker mr-5"></i>View map
                                     </button>
-                                </div>
-                                <div className="col-md-4">
+                                </div> */}
+                                {/* <div className="col-md-4">
                                     <h4 className="mb-15 text-primary">Shop</h4>
                                     <address>
                                         205 North Michigan Avenue, Suite 810<br />
@@ -100,7 +105,7 @@ const ContactPage = () => {
                                     <button className="btn btn-sm font-weight-bold text-white mt-20 border-radius-5 btn-shadow-primary hover-up">
                                         <i className="fi-rs-marker mr-5"></i>View map
                                     </button>
-                                </div>
+                                </div> */}
                             </div>
                             <div 
                              style={{display:'flex'}} className="contact-row">
